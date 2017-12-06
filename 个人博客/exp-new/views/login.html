@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div style="min-width: 300px; padding: 20px; width: 35%; border: 1px solid #ddd; border-radius: 8px; float: right; margin-right: 5%;" >
+<h1> 欢迎登录 
+<span style="float: right; font-size: 15px;">没用账号，<a href="/signup">请注册</a>
+</h1>
+<form method="post" action="/login">
+  <div class="form-group">
+    <label for="exampleInputEmail1">用户名</label>
+    <input type="text" name="user" class="form-control" id="exampleInputEmail1" placeholder="Username">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">密码</label>
+    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">验证码</label>
+    <div class="input-group">
+      <input type="text" name="captcha" class="form-control" id="exampleInputAmount" placeholder="点击图片重新获取">
+      <div class="input-group-addon" style="padding: 0">
+      <button style="padding: 0" class="btn btn-default" onclick="getCaptcha()" type="button">
+        <img id="captcha" style="width: 130px;" alt="验证码" src='{{ "data:image/jpeg;base64," + captcha }}'/> 
+        </button>
+      </div>
+    </div>    
+  </div>
+  <p id="errMessage" style="color: red;">{{ errMessage }}</p>
+  <button type="submit" class="btn btn-lg btn-primary btn-block">
+  <i class="glyphicon glyphicon-ok"></i>
+  提 交</button>
+</form>
+<script>
+    function getCaptcha() {
+      $.ajax("/captcha", {
+        type: "GET",
+        success: function(data) {
+          $("#captcha").attr("src", "data:image/jpeg;base64," + data);
+        }
+      })
+    }
+    setTimeout(function() {
+      document.getElementById("errMessage").innerHTML = "";
+    }, 5000);
+</script>
+</div>
+{% endblock %}

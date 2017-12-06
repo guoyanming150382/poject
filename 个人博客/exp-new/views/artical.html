@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div style="padding: 20px;">
+	<h1> {{ article.title }} </h1>
+	<h2>---- 作者：{{ article.author }}</h2>
+	<article>
+	{{ article.content | safe }}
+	</article>
+</div>
+{% endblock %}

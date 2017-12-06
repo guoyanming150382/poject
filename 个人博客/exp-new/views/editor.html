@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block head %}
+{{ super() }}
+<script src="/ckeditor/ckeditor.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
+{% block body %}
+<form id="form" method="post" action="/editor" style="padding: 20px;">
+  <div class="form-group">
+    <label for="exampleInputEmail1">标题</label>
+    <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Username">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">文章内容</label>
+    <textarea id="editor" name="content"></textarea>
+  </div>
+  <button type="submit" class="btn btn-default">保存</button>
+</form>
+<script type="text/javascript" charset="utf-8" async defer>
+	window.onload = function() {
+		CKEDITOR.replace("editor", {
+			height: 500,	
+			filebrowserImageUploadUrl: "/upload",
+		});
+		$("form").submit(function() {
+			const title = this.title.value;
+			//const content = this.content.value;
+			const content = CKEDITOR.instances.editor.getData();
+			console.log("Title:", title);
+			console.log("Content:", content);
+			//return false
+		});
+	}();
+</script>
+{% endblock %}

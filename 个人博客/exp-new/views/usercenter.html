@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="row">
+  <div class="col-sm-4 col-md-3">
+    <div class="thumbnail" style="text-align: center">
+    	<img src="{{ user.avatar }}" alt="用户头像" class="img-circle"/>
+    	<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">更改头像</button>
+      	<hr>
+      <div class="caption">
+        <h3>用户 {{ user.username }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8 col-md-9" style="border: 1px solid #aaa; min-height: 400px;">
+    <h1> 文章列表 </h1>
+    <ul style="margin-left: 10px; font-size: 18px;">
+      {% for art in articles %}
+      <li><a href='{{ "/article/" + art._id }}'>
+        {{ art.title }}
+      </a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% include "avatarModal.html" %}
+</div>
+{% endblock %}
